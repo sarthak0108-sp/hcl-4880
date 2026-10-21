@@ -1,4 +1,5 @@
 package com.sample.constructordi;
+import com.sample.setterdi.Address;
 
 public class Employee {
     private Address address;

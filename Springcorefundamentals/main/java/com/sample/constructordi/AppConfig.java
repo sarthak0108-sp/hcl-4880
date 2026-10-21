@@ -1,6 +1,6 @@
 package com.sample.constructordi;
 
-
+import com.sample.setterdi.Address;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
