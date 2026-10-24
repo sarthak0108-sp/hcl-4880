@@ -39,6 +39,15 @@ public String addBulkEmployees(){
     return count + " employees added successfully";
 
 }
+public String deleteById(){
+        long emp_id=201;
+        return emprepo.deleteById(emp_id);
+}
+public String updateById(){
+        long emp_id=202;
+    Employee updated = new Employee(202, "Rohit Sharma", "Hacker", "Pull shot", "rohit.sharma@gmail.com");
+    return emprepo.updateById(emp_id, updated);
 
+}
 }
 
