@@ -30,4 +30,8 @@ public class EmployeeController {
     public Employee getEmpById(){
         return employeeServiceImp.getEmpById();
     }
+    @GetMapping("/addbulk")
+    public String addBulkEmployees(){
+        return employeeServiceImp.addBulkEmployees();
+    }
 }

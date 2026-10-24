@@ -5,6 +5,7 @@ import org.abesproject.hclhrms.repository.EmpRepoImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,8 +25,20 @@ public class EmployeeServiceImp {
         return emprepo.getEmpById(200);
     }
 public String addBulkEmployees(){
+    List<Employee> employees = new ArrayList<>();
+    employees.add(new Employee(201, "Aman", "Developer", "Java", "aman@gmail.com"));
+    employees.add(new Employee(202, "Riya", "Tester", "Selenium", "riya@gmail.com"));
+    employees.add(new Employee(203, "Karan", "Analyst", "SQL", "karan@gmail.com"));
+    employees.add(new Employee(204, "Neha", "Developer", "Spring Boot", "neha@gmail.com"));
+
+    int count = 0;
+    for (Employee emp : employees) {
+        emprepo.addemp(emp);
+        count++;
+    }
+    return count + " employees added successfully";
 
 }
 
-    }
+}
 
