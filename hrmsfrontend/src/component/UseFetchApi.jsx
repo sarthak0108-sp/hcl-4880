@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-const UsefetchApi = () => {
-    
+const UseFetchApi = () => {
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    const [serverData, setServerData] = useState([]);
-    useEffect(()=>{
-        async function getData(){
-            try{
-                const response=await fetch("http://localhost:8080");
-                const jsonData=await response.text();
-                console.log(jsonData);
-                 setServerData(jsonData);
-            }
-            catch(e){
-                console.error("Error fetching data:", e);
-            }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/');
+
+        if (!response.ok) {
+          throw new Error(`HTTP error: ${response.status}`);
         }
-        getData();
-    },[]);
- return (
-    <div>
-        <h2>Backend Response:</h2>
-        <p>{serverData}</p>
-    </div>
-)
-}
 
-export default UsefetchApi;
+        const message = await response.text();
+        setData(message);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <h2>Loading...</h2>;
+
+  if (error) return <h2>Error: {error}</h2>;
+
+  return (
+    <div>
+      <h1>HRMS Application</h1>
+      <h2>{data}</h2>
+    </div>
+  );
+};
+
+export default UseFetchApi;
