@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-    public String createnewEmployee(){
-        Employee emp1=new Employee(200l,"Ram","Java","Developer");
-        employeeRepository.save(emp1);
+    public String createnewEmployee(Employee emp) {
+        if (employeeRepository.existsById(emp.getEmp_id())) {
+            return "Employee ID already exists: " + emp.getEmp_id();
+        }
+
+        employeeRepository.save(emp);
         return "Employee is added successfully";
     }
 
