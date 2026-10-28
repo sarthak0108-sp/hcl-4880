@@ -1,5 +1,7 @@
 package org.abes.hrmsdatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -7,52 +9,41 @@ import jakarta.persistence.Id;
 public class Employee {
 
     @Id
-    private long emp_id;
+    @Column(name = "emp_id")
+    private long empId;
 
-    private String emp_name;
+    @Column(name = "emp_name")
+    private String empName;
+
     private String stack;
     private String designation;
+
+    // accepted in requests, never returned in responses
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     public Employee() {
     }
 
-    public Employee(long emp_id, String emp_name,
-                    String stack, String designation) {
-        this.emp_id = emp_id;
-        this.emp_name = emp_name;
+    public Employee(long empId, String empName, String stack, String designation) {
+        this.empId = empId;
+        this.empName = empName;
         this.stack = stack;
         this.designation = designation;
     }
 
-    public long getEmp_id() {
-        return emp_id;
-    }
+    public long getEmpId() { return empId; }
+    public void setEmpId(long empId) { this.empId = empId; }
 
-    public void setEmp_id(long emp_id) {
-        this.emp_id = emp_id;
-    }
+    public String getEmpName() { return empName; }
+    public void setEmpName(String empName) { this.empName = empName; }
 
-    public String getEmp_name() {
-        return emp_name;
-    }
+    public String getStack() { return stack; }
+    public void setStack(String stack) { this.stack = stack; }
 
-    public void setEmp_name(String emp_name) {
-        this.emp_name = emp_name;
-    }
+    public String getDesignation() { return designation; }
+    public void setDesignation(String designation) { this.designation = designation; }
 
-    public String getStack() {
-        return stack;
-    }
-
-    public void setStack(String stack) {
-        this.stack = stack;
-    }
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 }
