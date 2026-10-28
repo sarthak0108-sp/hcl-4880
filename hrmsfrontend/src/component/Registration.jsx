@@ -123,7 +123,7 @@ function Registration() {
             placeholder="Enter tech stack"
             required
           />
-        </div>
+        </div> 
 
         <button
           type="submit"

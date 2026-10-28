@@ -1,23 +1,22 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Login from './component/Login.jsx'
+import EmployeeDashboard from './component/EmployeeDashboard.jsx'
+import Dashboard from './component/Dashboard.jsx'
 
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
-import UseFetchApi from './component/UseFetchApi';
-import Home from './component/Home';
-import Login from './component/Login';
-import Registration from './component/Registration';
+function PrivateRoute({ children }) {
+  const empid = localStorage.getItem('empid')
+  return empid ? children : <Navigate to="/login" replace />
+}
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<UseFetchApi />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Registration" element={<Registration />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    <Routes>
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<PrivateRoute><EmployeeDashboard /></PrivateRoute>} />
+      <Route path="/admin" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+    </Routes>
+  )
 }
 
-export default App;
+export default App
