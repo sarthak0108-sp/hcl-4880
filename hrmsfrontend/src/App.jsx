@@ -1,20 +1,23 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
-import SampleCode from './component/SampleCode'
-import UsefetchApi from './component/UsefetchApi'
+
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import UseFetchApi from './component/UseFetchApi';
+import Home from './component/Home';
+import Login from './component/Login';
+import Registration from './component/Registration';
 
 function App() {
-  //const [count, setCount] = useState(0)
-
-
-return (
-    <div>
-        <UsefetchApi />
-    </div>
-);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<UseFetchApi />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/Registration" element={<Registration />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
