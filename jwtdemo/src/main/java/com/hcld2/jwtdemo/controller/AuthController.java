@@ -1,89 +1,30 @@
-
 package com.hcld2.jwtdemo.controller;
 
 import com.hcld2.jwtdemo.dto.AuthRequest;
-import com.hcld2.jwtdemo.entity.User;
-import com.hcld2.jwtdemo.repository.UserRepository;
-import com.hcld2.jwtdemo.service.JwtService;
-
+import com.hcld2.jwtdemo.dto.AuthResponse;
+import com.hcld2.jwtdemo.dto.StatusResponse;
+import com.hcld2.jwtdemo.service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
-
-    // Constructor injection
-    public AuthController(UserRepository userRepository,
-                          PasswordEncoder passwordEncoder,
-                          JwtService jwtService) {
-
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-    }
+    private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
-            @Valid @RequestBody AuthRequest req) {
-
-        if (userRepository.findByUsername(req.username()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                    Map.of("error", "Username is already in use")
-            );
-        }
-
-        userRepository.save(
-                new User(
-                        req.username(),
-                        passwordEncoder.encode(req.password())
-                )
-        );
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                Map.of("message", "User registered successfully")
-        );
+    public ResponseEntity<StatusResponse> register(@Valid @RequestBody AuthRequest req) {
+        return ResponseEntity.ok(authService.registerUser(req));
     }
-
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthRequest req) {
-
-        User user = userRepository.findByUsername(req.username())
-                .orElse(null);
-        //Checking whether user exists or not
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    Map.of("error", "Invalid username or password")
-            );
-        }
-
-        // Verify password
-        if (!passwordEncoder.matches(req.password(), user.getPassword())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                    Map.of("error", "Invalid username or password")
-            );
-        }
-
-        // Generate JWT token
-        String token = jwtService.generateToken(user.getUsername());
-
-        return ResponseEntity.ok(
-                Map.of(
-                        "message", "Login successful",
-                        "token", token,
-                        "username", user.getUsername()
-                )
-        );
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest req) {
+        return ResponseEntity.ok(authService.login(req));
     }
-
 }

@@ -33,8 +33,18 @@ public class SecurityConfig {
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(h -> h.frameOptions(f -> f.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**", "/h2-console/**", "/error").permitAll()
+                        // public: auth, h2 console, error page, swagger
+                        .requestMatchers(
+                                "/api/v1/auth/**",
+                                "/h2-console/**",
+                                "/error",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        // anyone can read posts
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
+                        // everything else needs a valid JWT
                         .requestMatchers(HttpMethod.POST, "/api/v1/posts/**").authenticated()
                         .anyRequest().authenticated()
                 )
