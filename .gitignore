@@ -1,54 +1,10 @@
-<<<<<<< HEAD
-### IntelliJ IDEA ###
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-=======
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# backend
+backend/target
+.idea
 *.iml
-*.ipr
->>>>>>> main
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-<<<<<<< HEAD
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-=======
->>>>>>> main
+# frontend
+frontend/node_modules
+frontend/dist
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-<<<<<<< HEAD
-=======
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
->>>>>>> main
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
+.env
